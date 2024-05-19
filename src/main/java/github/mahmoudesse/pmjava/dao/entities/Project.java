@@ -2,9 +2,11 @@ package github.mahmoudesse.pmjava.dao.entities;
 
 import github.mahmoudesse.pmjava.dao.enums.ProjectPriority;
 import github.mahmoudesse.pmjava.dao.enums.ProjectStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,6 +36,6 @@ public class Project {
   @Enumerated(EnumType.STRING)
   private ProjectPriority priority;
 
-  @OneToMany(mappedBy = "project")
+  @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<Task> tasks;
 }
