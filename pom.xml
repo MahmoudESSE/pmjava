@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>github.mahmoudesse</groupId>
-	<artifactId>japp</artifactId>
+	<artifactId>pmjava</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>pmjava</name>
 	<description>project managemant webapp</description>

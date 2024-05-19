@@ -5,7 +5,6 @@ import github.mahmoudesse.pmjava.service.interfaces.IProjectService;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,55 +17,55 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProjectController {
   private final IProjectService ps;
 
-  @GetMapping("/project/list")
+  @GetMapping("/listProjects")
   public String listProjects(Model model) {
     List<Project> projects = ps.getAll();
 
     model.addAttribute("projects", projects);
 
-    return "project/index";
+    return "index";
   }
 
-  @GetMapping("/project/createForm")
-  public String createForm(Model model) {
+  @GetMapping("/createProjectForm")
+  public String createProjectForm(Model model) {
     model.addAttribute("project", new Project());
-    return "project/createForm";
+    return "createProjectForm";
   }
 
-  @PostMapping("/project/create")
-  public String create(Model model, @Valid Project p, BindingResult br) {
+  @PostMapping("/createProject")
+  public String createProject(Model model, @Valid Project p, BindingResult br) {
     if (br.hasErrors()) {
-      return "project/createForm";
+      return "createProjectForm";
     }
 
     ps.create(p);
 
-    return "redirect:/project/list";
+    return "redirect:/listProjects";
   }
 
-  @GetMapping("/project/delete")
-  public String delete(@RequestParam Integer id) {
+  @GetMapping("/deleteProject")
+  public String deleteProject(@RequestParam Integer id) {
     ps.delete(id);
-    return "redirect:/project:list";
+    return "redirect:/listProjects";
   }
 
-  @GetMapping("/project/updateForm")
-  public String upadteForm(Model model, @RequestParam Integer id)
+  @GetMapping("/updateProjectForm")
+  public String upadteProjectForm(Model model, @RequestParam Integer id)
       throws Exception {
     Project p = ps.findById(id);
     model.addAttribute("project", p);
-    return "project/updateForm";
+    return "updateProjectForm";
   }
 
-  @PostMapping("/project/update")
-  public String update(Model model, Project p, BindingResult br,
+  @PostMapping("/updateProject")
+  public String updateProject(Model model, Project p, BindingResult br,
       @RequestParam Integer id) {
     if (br.hasErrors()) {
-      return "project/updateForm";
+      return "updateProjectForm";
     }
 
     p.setId(id);
     ps.update(p);
-    return "redirect:/project/list";
+    return "redirect:/listProjects";
   }
 }

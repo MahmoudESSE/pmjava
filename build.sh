@@ -7,7 +7,7 @@ spring init \
 	--extract . \
 	--language java \
 	--name pmjava \
-	--artifact-id japp \
+	--artifact-id pmjava \
 	--group-id github.mahmoudesse \
 	--package-name github.mahmoudesse.pmjava \
 	--description "project managemant webapp" \

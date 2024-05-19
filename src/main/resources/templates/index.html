@@ -15,7 +15,7 @@
   </head>
   <body>
     <div class="container">
-      <a class="btn btn-primary" th:href="@{/create}">Add Project</a>
+      <a class="btn btn-primary" th:href="@{/createProjectForm}">Add Project</a>
     </div>
     <div class="container">
       <table class="table">
@@ -27,17 +27,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="c:${projects}">
-            <th th:text="${c.getId}" scope="row"></th>
-            <td th:text="${c.getName}"></td>
+          <tr th:each="p:${projects}">
+            <th th:text="${p.getId}" scope="row"></th>
+            <td th:text="${p.getName}"></td>
             <td>
               <a
                 onClick="return confirm('are you want to delete this project?')"
                 class="btn btn-danger"
-                th:href="@{/delete(id=${c.getId})}"
+                th:href="@{/deleteProject(id=${p.getId})}"
                 >Delete</a
               >
-              <a class="btn btn-primary" th:href="@{/update(id=${c.getId})}"
+              <a
+                class="btn btn-primary"
+                th:href="@{/updateProjectForm(id=${p.getId})}"
                 >Edit</a
               >
             </td>
