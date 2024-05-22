@@ -1,19 +1,23 @@
 package github.mahmoudesse.pmjava.service.interfaces;
 
 import github.mahmoudesse.pmjava.dao.entities.Task;
-import java.util.List;
+import github.mahmoudesse.pmjava.dao.enums.TaskStatus;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface ITaskService {
-  public void add(Task t);
+  void add(Task t, Integer projectId);
 
-  public void delete(Integer id);
+  void delete(Integer id);
 
-  public void update(Task t);
+  void update(Task t, Integer projectId);
 
-  public Task findById(Integer id) throws Exception;
+  Task findById(Integer id) throws Exception;
 
-  public List<Task> getAll();
+  List<Task> getAllByProject(Integer projectId);
 
-  public Page<Task> getPage(int pageNum);
+  Page<Task> getPage(int pageNum);
+
+  void changeStatus(Integer id, TaskStatus status);
 }

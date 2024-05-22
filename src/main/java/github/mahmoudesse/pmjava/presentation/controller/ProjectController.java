@@ -3,7 +3,6 @@ package github.mahmoudesse.pmjava.presentation.controller;
 import github.mahmoudesse.pmjava.dao.entities.Project;
 import github.mahmoudesse.pmjava.service.interfaces.IProjectService;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,16 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
-@RequestMapping("/project")
+@RequestMapping("/projects")
 @Controller
 public class ProjectController {
   private final IProjectService ps;
-
-  @GetMapping("/")
-  public String indexProject() {
-    return "projects/index";
-  }
 
   @GetMapping("/listProjects")
   public String listProjects(Model model) {
@@ -30,30 +27,30 @@ public class ProjectController {
 
     model.addAttribute("projects", projects);
 
-    return "index";
+    return "projects/index";
   }
 
   @GetMapping("/createProjectForm")
   public String createProjectForm(Model model) {
     model.addAttribute("project", new Project());
-    return "createProjectForm";
+    return "projects/createProjectForm";
   }
 
   @PostMapping("/createProject")
   public String createProject(Model model, @Valid Project p, BindingResult br) {
     if (br.hasErrors()) {
-      return "createProjectForm";
+      return "projects/createProjectForm";
     }
 
     ps.create(p);
 
-    return "redirect:/listProjects";
+    return "redirect:/projects/listProjects";
   }
 
   @GetMapping("/deleteProject")
   public String deleteProject(@RequestParam Integer id) {
     ps.delete(id);
-    return "redirect:/listProjects";
+    return "redirect:/projects/listProjects";
   }
 
   @GetMapping("/updateProjectForm")
@@ -61,18 +58,35 @@ public class ProjectController {
       throws Exception {
     Project p = ps.findById(id);
     model.addAttribute("project", p);
-    return "updateProjectForm";
+    return "projects/updateProjectForm";
   }
 
   @PostMapping("/updateProject")
   public String updateProject(Model model, Project p, BindingResult br,
-      @RequestParam Integer id) {
+                              @RequestParam Integer id) {
     if (br.hasErrors()) {
-      return "updateProjectForm";
+      return "projects/updateProjectForm";
     }
 
     p.setId(id);
     ps.update(p);
-    return "redirect:/listProjects";
+    return "redirect:/projects/listProjects";
+  }
+
+  @GetMapping("/searchProject")
+  public String searchProject(@RequestParam Integer projectId, Model model) {
+    try {
+      Project task = ps.findById(projectId);
+      if (task != null) {
+        List<Project> tasks = new ArrayList<>();
+        tasks.add(task);
+        model.addAttribute("projects", tasks);
+      } else {
+        model.addAttribute("errorMessage", "Project Not Found");
+      }
+    } catch (Exception e) {
+      model.addAttribute("errorMessage", "Error");
+    }
+    return "projects/index";
   }
 }

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link
+            crossorigin="anonymous"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            rel="stylesheet"
+    />
+    <title>Create Project</title>
+</head>
+<body>
+<div class="container">
+    <form method="POST" th:action="@{/tasks/createTask(projectId=${projectId})}">
+        <div class="mb-3">
+            <label class="form-label" for="name">Name</label>
+            <input class="form-control" id="idName" name="name" type="text"/>
+            <div
+                    class="form-text"
+                    id="nameHelp"
+                    th:errors="${task.name}"
+            ></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="description">Description</label>
+            <input class="form-control" id="idDescription" name="description" type="text"/>
+            <div
+                    class="form-text"
+                    id="descriptionHelp"
+                    th:errors="${task.description}"
+            ></div>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>
+
+<script
+        crossorigin="anonymous"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+</body>
+</html>

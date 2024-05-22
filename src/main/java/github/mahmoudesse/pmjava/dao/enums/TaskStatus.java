@@ -10,5 +10,5 @@ public enum TaskStatus {
   IN_PROGRESS("IN_PROGRESS"),
   COMPLETED("COMPLETED");
 
-  private final String priority;
+  private final String status;
 }
