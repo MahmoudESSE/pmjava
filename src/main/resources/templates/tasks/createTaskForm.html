@@ -14,26 +14,39 @@
 </head>
 <body>
 <div class="container">
-    <form method="POST" th:action="@{/tasks/createTask(projectId=${projectId})}">
+    <form method="POST" th:action="@{/tasks/createTask(projectId=${projectId})}" th:object="${task}">
         <div class="mb-3">
             <label class="form-label" for="idName">Name</label>
-            <input class="form-control" id="idName" name="name" type="text"/>
+            <input class="form-control" id="idName" name="name" th:field="*{name}" type="text"/>
             <div
                     class="form-text"
                     id="nameHelp"
-                    th:errors="${task.name}"
+                    th:errors="*{name}"
             ></div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="idDescription">Description</label>
-            <input class="form-control" id="idDescription" name="description" type="text"/>
+            <input class="form-control" id="idDescription" name="description" th:field="*{description}" type="text"/>
             <div
                     class="form-text"
                     id="descriptionHelp"
-                    th:errors="${task.description}"
+                    th:errors="*{description}"
+            ></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="idStatus">Description</label>
+            <select class="form-control" id="idStatus" name="status" th:field="*{status}">
+                <option th:each="ts:${T(github.mahmoudesse.pmjava.dao.enums.TaskStatus).values()}"
+                        th:text="${ts}" th:value="${ts}"></option>
+            </select>
+            <div
+                    class="form-text"
+                    id="statusHelp"
+                    th:errors="${task.status}"
             ></div>
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
+        <a class="btn btn-dark" th:href="@{/tasks/listTasks(projectId=${projectId})}">Cancel</a>
     </form>
 </div>
 

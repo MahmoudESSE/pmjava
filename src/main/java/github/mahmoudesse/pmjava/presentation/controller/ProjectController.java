@@ -24,7 +24,7 @@ public class ProjectController {
   @GetMapping("/listProjects")
   public String listProjects(Model model) {
     List<Project> projects = ps.getAll();
-
+    
     model.addAttribute("projects", projects);
 
     return "projects/index";
@@ -37,11 +37,10 @@ public class ProjectController {
   }
 
   @PostMapping("/createProject")
-  public String createProject(Model model, @Valid Project p, BindingResult br) {
+  public String createProject(@Valid Project p, BindingResult br) {
     if (br.hasErrors()) {
       return "projects/createProjectForm";
     }
-
     ps.create(p);
 
     return "redirect:/projects/listProjects";

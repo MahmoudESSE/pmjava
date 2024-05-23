@@ -44,7 +44,6 @@ public class Security {
         .roles("USER")
         .build();
 
-    InMemoryUserDetailsManager mm = new InMemoryUserDetailsManager(admin, user);
-    return mm;
+    return new InMemoryUserDetailsManager(admin, user);
   }
 }

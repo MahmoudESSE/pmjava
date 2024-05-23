@@ -1,5 +1,6 @@
 package github.mahmoudesse.pmjava.service.implementation;
 
+import github.mahmoudesse.pmjava.dao.entities.Project;
 import github.mahmoudesse.pmjava.dao.entities.Task;
 import github.mahmoudesse.pmjava.dao.enums.TaskStatus;
 import github.mahmoudesse.pmjava.dao.repositories.IProjectRepository;
@@ -50,9 +51,27 @@ public class TaskServiceImplementation implements ITaskService {
   }
 
   @Override
-  public List<Task> getAllByProject(Integer projectId) {
-    Example<Task> taskExample = Example.of(new Task(null, null, null, null, pr.findById(projectId).get()));
-    return tr.findAll(taskExample);
+  public List<Task> getAllByProject(Integer projectId) throws Exception {
+    Optional<Project> op = pr.findById(projectId);
+    if (op.isPresent()) {
+      Project p = op.get();
+      Example<Task> taskExample = Example.of(new Task(null, null, null, null, p));
+      return tr.findAll(taskExample);
+    }
+
+    throw new Exception("ProjectNotFound");
+  }
+
+  @Override
+  public List<Task> getAllByStatus(Integer projectId, TaskStatus status) throws Exception {
+    Optional<Project> op = pr.findById(projectId);
+    if (op.isPresent()) {
+      Project p = op.get();
+      Example<Task> taskExample = Example.of(new Task(null, null, null, status, p));
+      return tr.findAll(taskExample);
+    }
+
+    throw new Exception("ProjectNotFound");
   }
 
   @Override

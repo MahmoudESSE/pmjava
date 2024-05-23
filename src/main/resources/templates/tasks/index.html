@@ -19,9 +19,11 @@
         Add Tache</a>
     <a class="btn btn-primary" th:href="@{/projects/listProjects}">
         Projects</a>
+    <a class="btn btn-primary" th:href="@{/tasks/taskReporting(projectId=${projectId})}">
+        Reporting</a>
     <nav class="navbar navbar-light bg-light">
-        <form class="form-inline" method="get" th:action="@{/tasks/searchTasks}">
-            <input aria-label="SearchProject" class="form-control mr-sm-2" placeholder="Search Project By Id"
+        <form class="form-inline" method="get" th:action="@{/tasks/searchTask}">
+            <input aria-label="SearchTask" class="form-control mr-sm-2" placeholder="Search Task By Id"
                    th:name="taskId" type="search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -33,40 +35,29 @@
         <tr>
             <th scope="col">id</th>
             <th scope="col">nom</th>
+            <th scope="col">status</th>
             <th scope="col">action</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="t:${tasks}">
-            <th scope="row" th:text="${t.getId}"></th>
-            <td th:text="${t.getName}"></td>
+            <th scope="row" th:text="${t.id}"></th>
+            <td th:text="${t.name}"></td>
+            <td>
+                <span class="badge rounded-pill bg-info  text-black" th:text="${t.status}"></span>
+            </td>
             <td>
                 <a
                         class="btn btn-danger"
                         onClick="return confirm('are you want to delete this task?')"
-                        th:href="@{/tasks/deleteTask(taskId=${t.getId}, projectId=${projectId})}"
+                        th:href="@{/tasks/deleteTask(taskId=${t.id}, projectId=${projectId})}"
                 >Delete</a
                 >
                 <a
                         class="btn btn-primary"
-                        th:href="@{/tasks/updateTaskForm(taskId=${t.getId}, projectId=${projectId})}"
+                        th:href="@{/tasks/updateTaskForm(taskId=${t.id}, projectId=${projectId})}"
                 >Edit</a
                 >
-                <form method="get" th:action="@{/tasks/saveStatusChanges}">
-                    <div>
-                        <select class="form-control" id="inputState">
-                            <option th:selected="${true}" th:text="${t.getStatus}"></option>
-                            <option th:each="sv:${taskStatuses}" th:name="taskNewStatus"
-                                    th:text="${sv.getStatus}"></option>
-                        </select>
-                    </div>
-                    <button
-                            class="btn btn-primary"
-                            type="submit"
-                    >Save
-                    </button
-                    >
-                </form>
             </td>
         </tr>
         </tbody>

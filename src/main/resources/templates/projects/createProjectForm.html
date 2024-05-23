@@ -14,17 +14,42 @@
 </head>
 <body>
 <div class="container">
-    <form method="POST" th:action="@{/projects/createProject}">
+    <form method="POST" th:action="@{/projects/createProject}" th:object="${project}">
         <div class="mb-3">
-          <label class="form-label" for="idName">name</label>
-            <input class="form-control" id="idName" name="name" type="text"/>
+            <label class="form-label" for="idName">name</label>
+            <input class="form-control" id="idName" name="name" th:field="*{name}" type="text"/>
             <div
                     class="form-text"
                     id="nameHelp"
-                    th:errors="${project.name}"
+                    th:errors="*{name}"
+            ></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="idPriority">Priority</label>
+            <select class="form-control" id="idPriority" name="priority" th:field="*{priority}">
+                <option th:each="pp:${T(github.mahmoudesse.pmjava.dao.enums.ProjectPriority).values()}"
+                        th:text="${pp}" th:value="${pp}"></option>
+            </select>
+            <div
+                    class="form-text"
+                    id="priorityHelp"
+                    th:errors="${project.status}"
+            ></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="idStatus">Status</label>
+            <select class="form-control" id="idStatus" name="status" th:field="*{status}">
+                <option th:each="ps:${T(github.mahmoudesse.pmjava.dao.enums.ProjectStatus).values()}"
+                        th:text="${ps}" th:value="${ps}"></option>
+            </select>
+            <div
+                    class="form-text"
+                    id="statusHelp"
+                    th:errors="${project.priority}"
             ></div>
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
+        <a class="btn btn-dark" th:href="@{/projects/listProjects}">Cancel</a>
     </form>
 </div>
 

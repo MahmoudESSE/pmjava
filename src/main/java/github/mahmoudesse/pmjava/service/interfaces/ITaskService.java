@@ -15,7 +15,9 @@ public interface ITaskService {
 
   Task findById(Integer id) throws Exception;
 
-  List<Task> getAllByProject(Integer projectId);
+  List<Task> getAllByProject(Integer projectId) throws Exception;
+
+  List<Task> getAllByStatus(Integer projectId, TaskStatus status) throws Exception;
 
   Page<Task> getPage(int pageNum);
 

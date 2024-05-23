@@ -5,6 +5,7 @@ import github.mahmoudesse.pmjava.dao.enums.TaskStatus;
 import github.mahmoudesse.pmjava.service.interfaces.ITaskService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,15 +20,16 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/tasks")
 @Controller
+@Slf4j
 public class TaskController {
   private final ITaskService ts;
 
+
   @GetMapping("/listTasks")
-  public String listTasks(Model model, @RequestParam Integer projectId) {
+  public String listTasks(Model model, @RequestParam Integer projectId) throws Exception {
     List<Task> tasks = ts.getAllByProject(projectId);
     model.addAttribute("projectId", projectId);
     model.addAttribute("tasks", tasks);
-    model.addAttribute("taskStatuses", TaskStatus.values());
     return "tasks/index";
   }
 
@@ -89,10 +91,19 @@ public class TaskController {
     return "tasks/index";
   }
 
-  @GetMapping("/changeStatus")
-  public String saveStatusChanges(@RequestParam Integer taskId, @RequestParam TaskStatus status) throws Exception {
-    ts.changeStatus(taskId, status);
-    Task task = ts.findById(taskId);
-    return "redirect:/tasks/listTasks?projectId=" + task.getProject().getId();
+  @GetMapping("/taskReporting")
+  public String taskReporting(Model model, @RequestParam Integer projectId) throws Exception {
+    List<Task> tasks = ts.getAllByProject(projectId);
+    List<Task> todoTasks = ts.getAllByStatus(projectId, TaskStatus.TODO);
+    List<Task> inProgressTasks = ts.getAllByStatus(projectId, TaskStatus.IN_PROGRESS);
+    List<Task> completedTasks = ts.getAllByStatus(projectId, TaskStatus.COMPLETED);
+
+    model.addAttribute("projectId", projectId);
+    model.addAttribute("tasks", tasks);
+    model.addAttribute("todoTasks", todoTasks);
+    model.addAttribute("inProgressTasks", inProgressTasks);
+    model.addAttribute("completedTasks", completedTasks);
+
+    return "tasks/reporting";
   }
 }
