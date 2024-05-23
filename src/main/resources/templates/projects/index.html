@@ -14,9 +14,15 @@
 </head>
 <body>
 <div class="container">
-    <a class="btn btn-primary" th:href="@{/projects/createProjectForm}">Add Project</a>
-    <a class="btn btn-primary" th:href="@{/projects/listProjects}">
-        Projects</a>
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/projects/listProjects}">
+                Projects</a>
+        </li>
+        <li class="nav-item">
+            <a class="btn btn-primary" th:href="@{/projects/createProjectForm}">Add Project</a>
+        </li>
+    </ul>
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline" method="get" th:action="@{/projects/searchProject}">
             <input aria-label="SearchProject" class="form-control mr-sm-2" placeholder="Search Project By Id"
@@ -33,7 +39,7 @@
             <th scope="col">nom</th>
             <th scope="col">priority</th>
             <th scope="col">status</th>
-            <th scope="col">tasks</th>
+            <!--            <th scope="col">tasks</th>-->
             <th scope="col">action</th>
         </tr>
         </thead>

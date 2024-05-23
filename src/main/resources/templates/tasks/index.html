@@ -15,12 +15,20 @@
 <body>
 
 <div class="container">
-    <a class="btn btn-primary" th:href="@{/tasks/createTaskForm(projectId=${projectId})}">
-        Add Tache</a>
-    <a class="btn btn-primary" th:href="@{/projects/listProjects}">
-        Projects</a>
-    <a class="btn btn-primary" th:href="@{/tasks/taskReporting(projectId=${projectId})}">
-        Reporting</a>
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link active" th:href="@{/projects/listProjects}">
+                Projects</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/tasks/taskReporting(projectId=${projectId})}">
+                Reporting</a>
+        </li>
+        <li class="nav-item">
+            <a class="btn btn-primary" th:href="@{/tasks/createTaskForm(projectId=${projectId})}">
+                Add Tache</a>
+        </li>
+    </ul>
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline" method="get" th:action="@{/tasks/searchTask}">
             <input aria-label="SearchTask" class="form-control mr-sm-2" placeholder="Search Task By Id"
